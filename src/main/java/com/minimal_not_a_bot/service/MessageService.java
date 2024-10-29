@@ -45,6 +45,8 @@ public class MessageService {
                     String message = buildMessage(postTitle, url, mentionsOfNextBook);
 
                     bot.sendText(5186470566L, message, "HTML");
+                } else {
+                    bot.sendText(5186470566L, "Sem post novo por enquanto", "HTML");
                 }
 
             }
