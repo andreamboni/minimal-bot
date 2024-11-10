@@ -5,10 +5,12 @@ FROM openjdk:17
 WORKDIR /app
 
 # Copiando o arquivo JAR do projeto para dentro do contêiner
-COPY target/minimal-not-a-bot-0.0.1-SNAPSHOT.jar app.jar
+# COPY target/minimal-not-a-bot-0.0.1-SNAPSHOT.jar app.jar
+COPY src /app/src
+COPY pom.xml /app
 
-# Expõe a porta em que o Spring Boot está configurado para rodar (por padrão é 8080)
-EXPOSE 8080
+RUN mvn clean package
 
 # Comando para executar a aplicação
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# ENTRYPOINT ["java", "-jar", "app.jar"]
+CMD [ "java", "-jar", "target/minimal-not-a-bot-0.0.1-SNAPSHOT.jar" ]

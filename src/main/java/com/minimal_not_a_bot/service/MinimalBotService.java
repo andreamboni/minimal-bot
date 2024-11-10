@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.minimal_not_a_bot.model.MinimalBot;
+import com.minimal_not_a_bot.model.MinimalPost;
 import com.minimal_not_a_bot.repository.MinimalBotRepository;
 
 @Service
@@ -16,14 +16,14 @@ public class MinimalBotService {
     private MinimalBotRepository repository;
 
     public boolean postExist(String postHashCode) {
-        Optional<MinimalBot> hashCode = repository.findByPostHashCode(postHashCode);
+        Optional<MinimalPost> hashCode = repository.findByPostHashCode(postHashCode);
 
         if(hashCode.isPresent()) {
             System.out.println("Post já existe");
             return true;
         }
 
-        repository.saveAndFlush(MinimalBot
+        repository.saveAndFlush(MinimalPost
                 .builder()
                 .postHashCode(postHashCode)
                 .insertTs(LocalDateTime.now())

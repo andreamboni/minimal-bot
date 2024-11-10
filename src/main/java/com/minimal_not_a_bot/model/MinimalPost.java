@@ -21,8 +21,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "MINIMAL_BOT", schema = "NOT_A_BOT")
-public class MinimalBot {
+@Table(name = "MINIMAL_POST", schema = "MINIMAL_BOT")
+public class MinimalPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
