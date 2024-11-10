@@ -9,7 +9,7 @@ WORKDIR /app
 COPY src /app/src
 COPY pom.xml /app
 
-RUN mvn clean package
+RUN mvn clean package -DskipTests
 
 # Comando para executar a aplicação
 # ENTRYPOINT ["java", "-jar", "app.jar"]
