@@ -30,10 +30,9 @@ public class MessageService {
             botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(bot);
 
-            List<BlogPost> blogPosts = scraper.getBlogPosts();
+            BlogPost blogPost = scraper.getLastBlogPost();
 
-            if (!blogPosts.isEmpty()) {
-                BlogPost blogPost = blogPosts.get(0);
+            if (blogPost != null) {
                 String postTitle = blogPost.getTitle();
                 String theDate = blogPost.getTheDate();
                 String url = blogPost.getUrl();
