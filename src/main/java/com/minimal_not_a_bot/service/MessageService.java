@@ -1,5 +1,6 @@
 package com.minimal_not_a_bot.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,8 @@ public class MessageService {
                 String postTitle = blogPost.getTitle();
                 String theDate = blogPost.getTheDate();
                 String url = blogPost.getUrl();
-                List<String> mentionsOfNextBook = blogPost.getMentionsOfNextBook();
+                // List<String> mentionsOfNextBook = blogPost.getMentionsOfNextBook();
+                List<String> mentionsOfNextBook = new ArrayList<>();
 
                 String hash = HashUtil.generateHash(postTitle, theDate, url);
 
@@ -63,14 +65,14 @@ public class MessageService {
                 .append("<b>Título do post: </b>")
                 .append(String.format("<a href=\"%s\">%s</a>\n", url, postTitle));
 
-        if (mentionsOfNextBook.isEmpty()) {
-            sb.append("The Winds of Winter não foi mencionado. 😭");
-        } else {
-            int i = 1;
-            for (String nextBook : mentionsOfNextBook) {
-                sb.append(String.format("<b>Menção # %d:</b>\n<blockquote>%s</blockquote>\n", i++, nextBook.trim()));
-            }
-        }
+        // if (mentionsOfNextBook.isEmpty()) {
+        //     sb.append("The Winds of Winter não foi mencionado. 😭");
+        // } else {
+        //     int i = 1;
+        //     for (String nextBook : mentionsOfNextBook) {
+        //         sb.append(String.format("<b>Menção # %d:</b>\n<blockquote>%s</blockquote>\n", i++, nextBook.trim()));
+        //     }
+        // }
 
         return sb.toString();
     }

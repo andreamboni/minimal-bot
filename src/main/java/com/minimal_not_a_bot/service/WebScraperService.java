@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
-import com.gargoylesoftware.htmlunit.html.HtmlImage;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.minimal_not_a_bot.model.BlogPost;
 
@@ -76,8 +75,8 @@ public class WebScraperService {
     }
 
     private BlogPost buildBlogPost(HtmlElement post) {
-        HtmlImage postImageElement = post.querySelector("img");
-        String postImage = postImageElement != null ? postImageElement.getSrcAttribute() : "";
+        // HtmlImage postImageElement = post.querySelector("img");
+        // String postImage = postImageElement != null ? postImageElement.getSrcAttribute() : "";
 
         HtmlElement titleElement = post.querySelector("h1");
         String title = titleElement != null ? titleElement.asNormalizedText() : "";
@@ -88,46 +87,46 @@ public class WebScraperService {
         HtmlElement dateElement = post.querySelector(".thedate");
         String theDate = dateElement != null ? dateElement.asNormalizedText() : "";
 
-        // Conteúdo do post
-        HtmlElement contentContainer = post.querySelector(".post");
-        List<String> content = new ArrayList<>();
-        List<String> mentionsOfNextBook = new ArrayList<>();
+        // // Conteúdo do post
+        // HtmlElement contentContainer = post.querySelector(".post");
+        // List<String> content = new ArrayList<>();
+        // List<String> mentionsOfNextBook = new ArrayList<>();
 
-        if (contentContainer != null) {
-            List<HtmlElement> paragraphs = contentContainer.getByXPath(".//p");
+        // if (contentContainer != null) {
+        //     List<HtmlElement> paragraphs = contentContainer.getByXPath(".//p");
 
-            for (HtmlElement paragraph : paragraphs) {
-                // Verifica imagens e iframes no parágrafo
-                HtmlImage img = paragraph.querySelector("img");
-                HtmlElement iframe = paragraph.querySelector("iframe");
+        //     for (HtmlElement paragraph : paragraphs) {
+        //         // Verifica imagens e iframes no parágrafo
+        //         HtmlImage img = paragraph.querySelector("img");
+        //         HtmlElement iframe = paragraph.querySelector("iframe");
 
-                if (img != null) {
-                    content.add(img.getSrcAttribute());
-                } else if (iframe != null) {
-                    content.add(iframe.getAttribute("src"));
-                } else {
-                    // Limpa caracteres desnecessários
-                    String cleanContent = paragraph.asXml().replaceAll("[^\\p{Print}\\p{Space}]|&nbsp;|</?p>|&amp", "");
-                    if (!cleanContent.isEmpty()) {
-                        content.add(cleanContent);
+        //         if (img != null) {
+        //             content.add(img.getSrcAttribute());
+        //         } else if (iframe != null) {
+        //             content.add(iframe.getAttribute("src"));
+        //         } else {
+        //             // Limpa caracteres desnecessários
+        //             String cleanContent = paragraph.asXml().replaceAll("[^\\p{Print}\\p{Space}]|&nbsp;|</?p>|&amp", "");
+        //             if (!cleanContent.isEmpty()) {
+        //                 content.add(cleanContent);
 
-                        if (mentionsNextBook(cleanContent, "WINDS OF WINTER", "THE WINDS OF WINTER", "TWOW")) {
-                            mentionsOfNextBook.add(cleanContent);
-                        }
-                    }
-                }
-            }
-        }
+        //                 if (mentionsNextBook(cleanContent, "WINDS OF WINTER", "THE WINDS OF WINTER", "TWOW")) {
+        //                     mentionsOfNextBook.add(cleanContent);
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
 
         // Adiciona o post à lista
         return BlogPost
                 .builder()
-                .postImage(postImage)
+                // .postImage(postImage)
                 .title(title)
                 .url(postUrl)
                 .theDate(theDate)
-                .content(content)
-                .mentionsOfNextBook(mentionsOfNextBook)
+                // .content(content)
+                // .mentionsOfNextBook(mentionsOfNextBook)
                 .build();
     }
 
