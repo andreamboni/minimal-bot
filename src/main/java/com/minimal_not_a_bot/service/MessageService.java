@@ -15,8 +15,6 @@ import com.minimal_not_a_bot.bot.Bot;
 import com.minimal_not_a_bot.model.BlogPost;
 import com.minimal_not_a_bot.util.HashUtil;
 
-import jakarta.annotation.PostConstruct;
-
 @Service
 public class MessageService {
     private static final Logger LOGGER = LogManager.getLogger(MessageService.class);
@@ -25,14 +23,13 @@ public class MessageService {
     private WebScraperService scraper;
 
     @Autowired
-    private MinimalBotService service;
+    private BlogPostService service;
 
     @Autowired
     private Bot bot;
 
     private static final String TELEGRAM_USER = System.getenv("TELEGRAM_USER");
 
-    @PostConstruct
     public void sendMessage() {
         LOGGER.info("Starting sending message process.");
         TelegramBotsApi botsApi;
@@ -50,7 +47,7 @@ public class MessageService {
 
                 String hash = HashUtil.generateHash(postTitle, theDate, url);
 
-                if (!service.postExist(hash, postTitle)) {
+                if (!service.postExist(hash, blogPost)) {
                     String message = buildMessage(postTitle, url, mentionsOfNextBook);
 
                     bot.sendText(Long.parseLong(TELEGRAM_USER), message, "HTML");
@@ -64,8 +61,8 @@ public class MessageService {
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
+
         LOGGER.info("Finishing up sending message process.");
-        System.exit(0);
     }
 
     private String buildMessage(String postTitle, String url, List<String> mentionsOfNextBook) {

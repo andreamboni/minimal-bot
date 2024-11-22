@@ -1,12 +1,10 @@
 spring:
   application:
     name: minimal-not-a-bot
-  datasource:
-    url: ${MINIMAL_BOT_DBURL}
-    username: ${MINIMAL_BOT_DBUSER}
-    password: ${MINIMAL_BOT_DBPW}
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
+  data:
+    mongodb:
+      host: ${MINIMAL_BOT_DBURL}
+      port: 27017
+      database: posts-archive
+      username: ${MINIMAL_BOT_DBUSER}
+      password: ${MINIMAL_BOT_DBPW}

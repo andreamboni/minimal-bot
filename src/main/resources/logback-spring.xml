@@ -2,9 +2,7 @@
     <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>C:\Development\logs\minimal-not-a-bot\application.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- Nome dos arquivos gerados diariamente -->
             <fileNamePattern>C:\Development\logs\minimal-not-a-bot\application-%d{yyyy-MM-dd}.log</fileNamePattern>
-            <!-- Mantém apenas os últimos 50 dias -->
             <maxHistory>50</maxHistory>
         </rollingPolicy>
         <encoder>
@@ -12,6 +10,17 @@
         </encoder>
     </appender>
 
+    <!-- Logger para capturar consultas do Hibernate SQL -->
+    <logger name="org.hibernate.SQL" level="debug">
+        <appender-ref ref="ROLLING"/>
+    </logger>
+
+    <!-- Logger para capturar parâmetros do Hibernate -->
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="trace">
+        <appender-ref ref="ROLLING"/>
+    </logger>
+
+    <!-- Captura de todos os logs do nível raiz (sem console) -->
     <root level="info">
         <appender-ref ref="ROLLING"/>
     </root>
