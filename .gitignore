@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Development history ###
+development-history.md
