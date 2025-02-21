@@ -7,5 +7,4 @@ import com.minimal_not_a_bot.model.BlogPages;
 
 @Repository
 public interface BlogPagesRepository extends MongoRepository<BlogPages, String>{
-
 }

@@ -1,6 +1,7 @@
 package com.minimal_not_a_bot.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,51 +12,34 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.generics.BotSession;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
-import com.minimal_not_a_bot.bot.Bot;
+import com.minimal_not_a_bot.bot.BotService;
 import com.minimal_not_a_bot.model.BlogPost;
-import com.minimal_not_a_bot.util.HashUtil;
 
 @Service
 public class MessageService {
     private static final Logger LOGGER = LogManager.getLogger(MessageService.class);
 
     @Autowired
-    private WebScraperService scraper;
-
-    @Autowired
-    private BlogPostService service;
-
-    @Autowired
-    private Bot bot;
+    private BotService botService;
 
     private static final String TELEGRAM_USER = System.getenv("TELEGRAM_USER");
 
-    public void sendMessage() {
+    public void sendMessage(BlogPost blogPost) {
         LOGGER.info("Starting sending message process.");
         TelegramBotsApi botsApi;
         try {
             botsApi = new TelegramBotsApi(DefaultBotSession.class);
-            BotSession registerBot = botsApi.registerBot(bot);
+            BotSession registerBot = botsApi.registerBot(botService);
 
-            BlogPost blogPost = scraper.getLastBlogPost();
+            Map<String, List<String>> asoiafBooksMentions = blogPost.getASOIAFBooksMentions();
+            List<String> theWindsOfWinterMentions = asoiafBooksMentions.get("THE WINDS OF WINTER");
 
-            if (blogPost != null) {
-                String postTitle = blogPost.getTitle();
-                String theDate = blogPost.getTheDate();
-                String url = blogPost.getUrl();
-                List<String> mentionsOfNextBook = blogPost.getMentionsOfNextBook();
+            String message = buildMessage(blogPost.getTitle(), blogPost.getUrl(), theWindsOfWinterMentions);
 
-                String hash = HashUtil.generateHash(postTitle, theDate, url);
-
-                if (!service.postExist(hash, blogPost)) {
-                    String message = buildMessage(postTitle, url, mentionsOfNextBook);
-
-                    bot.sendText(Long.parseLong(TELEGRAM_USER), message, "HTML");
-                    if(registerBot.isRunning()) {
-                        LOGGER.info("Stopping bot");
-                        registerBot.stop();
-                    }
-                }
+            botService.sendText(Long.parseLong(TELEGRAM_USER), message, "HTML");
+            if (registerBot.isRunning()) {
+                LOGGER.info("Stopping bot");
+                registerBot.stop();
             }
 
         } catch (TelegramApiException e) {
@@ -65,17 +49,17 @@ public class MessageService {
         LOGGER.info("Finishing up sending message process.");
     }
 
-    private String buildMessage(String postTitle, String url, List<String> mentionsOfNextBook) {
+    private String buildMessage(String postTitle, String url, List<String> theWindsOfWinterMentions) {
         StringBuilder sb = new StringBuilder()
                 .append("⚔️ <b>Novo post do George</b> ⚔️\n\n")
                 .append("<b>Título do post: </b>")
                 .append(String.format("<a href=\"%s\">%s</a>\n", url, postTitle));
 
-        if (mentionsOfNextBook.isEmpty()) {
+        if (theWindsOfWinterMentions == null) {
             sb.append("The Winds of Winter não foi mencionado. 😭");
         } else {
             int i = 1;
-            for (String nextBook : mentionsOfNextBook) {
+            for (String nextBook : theWindsOfWinterMentions) {
                 sb.append(String.format("<b>Menção # %d:</b>\n<blockquote>%s</blockquote>\n", i++, nextBook.trim()));
             }
         }

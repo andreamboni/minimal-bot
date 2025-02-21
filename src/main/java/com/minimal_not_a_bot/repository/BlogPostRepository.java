@@ -10,5 +10,4 @@ import com.minimal_not_a_bot.model.BlogPost;
 @Repository
 public interface BlogPostRepository extends MongoRepository<BlogPost, String> {
     Optional<BlogPost> findByPostHashCode(String postHashCode);
-
 }

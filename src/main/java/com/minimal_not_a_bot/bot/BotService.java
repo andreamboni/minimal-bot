@@ -1,6 +1,6 @@
 package com.minimal_not_a_bot.bot;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -8,8 +8,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-@Component
-public class Bot extends TelegramLongPollingBot {
+@Service
+public class BotService extends TelegramLongPollingBot {
 
     private static final String TELEGRAM_TOKEN = System.getenv("TELEGRAM_TOKEN");
 

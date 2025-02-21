@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.minimal_not_a_bot.service.ArchiveService;
-import com.minimal_not_a_bot.service.MessageService;
 
 import jakarta.annotation.PostConstruct;
 
@@ -16,22 +15,19 @@ public class Routine {
     private static final Logger LOGGER = LogManager.getLogger(Routine.class);
 
     @Autowired
-    private MessageService messageService;
-
-    @Autowired
     private ArchiveService archiveService;
 
     @PostConstruct
     public void mainRoutine() {
         LOGGER.info("Starting routine.");
         try {
-            messageService.sendMessage();
-            archiveService.archivePosts();
-        } catch (Exception e) {
+            archiveService.archiveBlogPosts();
+        } catch (Exception e) { // TODO: deveria ser Exception mesmo? não pode ser algo mais especifico? 
             LOGGER.error("Error while running routine: {}", e);
+            e.printStackTrace();
         }
         LOGGER.info("Finishing up routine.");
-        System.exit(0);
+        // System.exit(0);
     }
 
 }

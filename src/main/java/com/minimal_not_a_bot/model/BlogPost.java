@@ -2,6 +2,7 @@ package com.minimal_not_a_bot.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -20,19 +21,20 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode
-@Document(collection = "blog-post")
+// @Document(collection = "blog-post")
+@Document(collection = "blog-post-secondary")
 public class BlogPost {
     @Id 
     private String id;
-    private String postImage;
+    private String profileImage;
     private String title;
     @Indexed(unique = true) 
     private String url;
     private String theDate;
+    private LocalDateTime theDateFormatted;
     private List<String> content;
     private String tags;
-    private List<String> mentionsOfNextBook;
-    private Integer numberOfMentionsOfNextBook;
+    private Map<String, List<String>> ASOIAFBooksMentions;
     private String postHashCode;
     private LocalDateTime insertTs;
 }
