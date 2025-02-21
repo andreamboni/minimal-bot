@@ -99,7 +99,7 @@ public class BlogPostService {
         }
 
         if (!paragraphImage.isEmpty()) {
-            return paragraphImage.attr("src");
+            return buildImageHtmlElement(paragraphImage.attr("src"));
         }
 
         return cleanText(paragraph.html());
