@@ -21,8 +21,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode
-// @Document(collection = "blog-post")
-@Document(collection = "blog-post-secondary")
+@Document(collection = "blog-post")
 public class BlogPost {
     @Id 
     private String id;
