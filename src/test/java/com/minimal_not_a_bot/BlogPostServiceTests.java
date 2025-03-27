@@ -101,7 +101,7 @@ public class BlogPostServiceTests {
 
     @Test
     void checkBlogPostContentParagraph06() {
-        String expectedBlogPostContentParagraph = "<img src=\"https://georgerrmartin.com/notablog/wp-content/uploads/2024/07/toothless.jpg\"/>";
+        String expectedBlogPostContentParagraph = "<img src=\"https://georgerrmartin.com/notablog/wp-content/uploads/2024/07/toothless.jpg\" alt=\"\" width=\"225\" height=\"225\"/>";
         assertEquals(expectedBlogPostContentParagraph, blogPost.getContent().get(5));
     }
 
@@ -113,7 +113,7 @@ public class BlogPostServiceTests {
 
     @Test
     void checkBlogPostContentParagraph08() {
-        String expectedBlogPostContentParagraph = "<img src=\"https://georgerrmartin.com/notablog/wp-content/uploads/2024/07/smaug_dragon-1.webp\"/>";
+        String expectedBlogPostContentParagraph = "<img src=\"https://georgerrmartin.com/notablog/wp-content/uploads/2024/07/smaug_dragon-1.webp\" alt=\"\" width=\"1023\" height=\"538\"/>";
         assertEquals(expectedBlogPostContentParagraph, blogPost.getContent().get(7));
     }
 
@@ -125,7 +125,7 @@ public class BlogPostServiceTests {
 
     @Test
     void checkBlogPostContentParagraph10() {
-        String expectedBlogPostContentParagraph = "<img src=\"https://georgerrmartin.com/notablog/wp-content/uploads/2024/06/verm1-1024x691.jpg\"/>";
+        String expectedBlogPostContentParagraph = "<img src=\"https://georgerrmartin.com/notablog/wp-content/uploads/2024/06/verm1-1024x691.jpg\" alt=\"\" width=\"960\" height=\"648\"/>";
         assertEquals(expectedBlogPostContentParagraph, blogPost.getContent().get(9));
     }
 
@@ -137,7 +137,7 @@ public class BlogPostServiceTests {
 
     @Test
     void checkBlogPostContentParagraph12() {
-        String expectedBlogPostContentParagraph = "<img src=\"https://georgerrmartin.com/notablog/wp-content/uploads/2024/07/Dragonheart-1.jpg\"/>";
+        String expectedBlogPostContentParagraph = "<img src=\"https://georgerrmartin.com/notablog/wp-content/uploads/2024/07/Dragonheart-1.jpg\" alt=\"\" width=\"259\" height=\"194\"/>";
         assertEquals(expectedBlogPostContentParagraph, blogPost.getContent().get(11));
     }
 
@@ -179,7 +179,7 @@ public class BlogPostServiceTests {
 
     @Test
     void checkBlogPostContentParagraph19() {
-        String expectedBlogPostContentParagraph = "<img src=\"https://georgerrmartin.com/notablog/wp-content/uploads/2024/06/T-2-sigil.png\"/>";
+        String expectedBlogPostContentParagraph = "<img src=\"https://georgerrmartin.com/notablog/wp-content/uploads/2024/06/T-2-sigil.png\" alt=\"\" width=\"235\" height=\"259\"/>";
         assertEquals(expectedBlogPostContentParagraph, blogPost.getContent().get(18));
     }
 
@@ -191,7 +191,7 @@ public class BlogPostServiceTests {
 
     @Test
     void checkBlogPostContentParagraph21() {
-        String expectedBlogPostContentParagraph = "<img src=\"https://georgerrmartin.com/notablog/wp-content/uploads/2024/06/T-4-sigil.jpg\"/>";
+        String expectedBlogPostContentParagraph = "<img src=\"https://georgerrmartin.com/notablog/wp-content/uploads/2024/06/T-4-sigil.jpg\" alt=\"\" width=\"215\" height=\"234\"/>";
         assertEquals(expectedBlogPostContentParagraph, blogPost.getContent().get(20));
     }
 

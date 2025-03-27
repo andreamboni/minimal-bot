@@ -15,14 +15,13 @@ import com.minimal_not_a_bot.model.BlogPost;
 public class WebScraperService {
     private static final Logger LOGGER = LogManager.getLogger(WebScraperService.class);
 
-    private static final String URL = "https://georgerrmartin.com/notablog/";
     private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:135.0) Gecko/20100101 Firefox/135.0";
 
-    public List<BlogPost> getBlogPosts() {
+    public List<BlogPost> getBlogPosts(String url) {
         try {
-            LOGGER.info("Stating web scraping");
+            LOGGER.info("Starting web scraping");
             Document document = Jsoup
-                    .connect(URL)
+                    .connect(url)
                     .userAgent(USER_AGENT)
                     .header("Accept-Language", "*")
                     .get();
@@ -41,26 +40,5 @@ public class WebScraperService {
         LOGGER.info("Finishing up web scraping");
         return List.of();
     }
-
-    // private String buildContent(List<String> contentList) {
-    // StringBuilder content = new StringBuilder();
-    // for(String c : contentList) {
-    // content.append(c);
-    // content.append(System.lineSeparator());
-    // }
-
-    // return content.toString();
-    // }
-
-    // private String buildMentions(List<String> mentionsOfNextBook) {
-    // StringBuilder mentions = new StringBuilder();
-    // int mentionNumber = 1;
-    // for(String m : mentionsOfNextBook) {
-    // mentions.append("Mention number " + mentionNumber);
-    // mentions.append(m);
-    // mentions.append(System.lineSeparator());
-    // }
-    // return mentions.toString();
-    // }
 
 }

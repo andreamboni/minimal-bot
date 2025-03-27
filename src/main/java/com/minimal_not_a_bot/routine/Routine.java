@@ -22,7 +22,7 @@ public class Routine {
         LOGGER.info("Starting routine.");
         try {
             archiveService.archiveBlogPosts();
-        } catch (Exception e) { // TODO: deveria ser Exception mesmo? não pode ser algo mais especifico? 
+        } catch (Exception e) {
             LOGGER.error("Error while running routine: {}", e);
             e.printStackTrace();
         }

@@ -15,11 +15,11 @@ import com.minimal_not_a_bot.repository.BlogPostRepository;
 public class ArchiveService {
     private static final Logger LOGGER = LogManager.getLogger(ArchiveService.class);
 
+    private static final String URL = "https://georgerrmartin.com/notablog/";
+    private static final String LAST_PAGE_URL = "https://georgerrmartin.com/notablog/page/270";
+
     @Autowired
     private WebScraperService webScraperService;
-
-    // @Autowired
-    // private BlogPagesRepository blogPagesRepository;
 
     @Autowired
     private BlogPostRepository blogPostRepository;
@@ -30,7 +30,7 @@ public class ArchiveService {
     public void archiveBlogPosts() {
         LOGGER.info("Starting archiving posts process.");
 
-        List<BlogPost> blogPosts = webScraperService.getBlogPosts();
+        List<BlogPost> blogPosts = webScraperService.getBlogPosts(URL);
         LOGGER.info("Blog Posts fetched {}", blogPosts.size());
 
         for(BlogPost blogPost : blogPosts) {
@@ -47,45 +47,35 @@ public class ArchiveService {
         LOGGER.info("Finishing up archiving posts process.");
     }
 
-    // public void archivePosts() {
-    //     LOGGER.info("Starting archiving posts process");
-    //     List<BlogPages> blogPages = blogPagesRepository.findAll();
-    //     String pageNumber = null;
-    //     StringBuilder url = new StringBuilder();
+    public void archiveWholeNotABlog() {
+        LOGGER.info("Starting archiving posts process.");
 
-    //     if (blogPages.isEmpty()) {
-    //         pageNumber = LAST_PAGE;
-    //     } else {
-    //         pageNumber = blogPages.get(0).getPageNumber();
-    //     }
+        for(int i = 0; i < 300; i++) {
+            String url = "https://georgerrmartin.com/notablog/";
 
-    //     if (Integer.parseInt(pageNumber) >= 2) {
-    //         url.append(BASE_URL);
-    //         url.append(pageNumber);
+            if(i > 0) {
+                int pageNumber = i + 1;
+                url = url + "page/" + pageNumber;
+            }
 
-    //         LOGGER.info("Searching for the URL: {}", url.toString());
+            LOGGER.info("Scrapping page {}", url);
 
-    //         List<BlogPost> blogPosts = webScraperService.getBlogPosts(url.toString());
+            List<BlogPost> blogPosts = webScraperService.getBlogPosts(url);
+            LOGGER.info("Blog Posts fetched {}", blogPosts.size());
+    
+            for(BlogPost blogPost : blogPosts) {
+                Optional<BlogPost> blogPostHashCode = blogPostRepository.findByPostHashCode(blogPost.getPostHashCode());
+                if(!blogPostHashCode.isPresent()) {
+                    LOGGER.info("Saving blog post \"{}\"", blogPost.getTitle());
+                    blogPostRepository.save(blogPost);
+                    messageService.sendMessage(blogPost);
+                } else {
+                    LOGGER.info("Blog post \"{}\" already exists", blogPost.getTitle());
+                }
+            }
+        }
 
-    //         for(BlogPost blogPost : blogPosts) {
-    //             LOGGER.info("Saving blog post \"{}\"", blogPost.getTitle());
-    //             blogPostRepository.save(blogPost);
-    //         }
-            
-    //         // List<String> titles = blogPosts.stream().map(BlogPost::getTitle).toList();
-    //         // LOGGER.info("Saving blog posts for the page {}, with titles {}", pageNumber, titles.toString());
-    //         // blogPostRepository.saveAll(blogPosts);
-            
-    //         LOGGER.info("Cleaning blog-pages collection");
-    //         blogPagesRepository.deleteAll();
-            
-    //         Integer newPageNumber = Integer.parseInt(pageNumber) - 1;
-    //         LOGGER.info("Saving page number {} into blog-pages collection", newPageNumber);
-    //         blogPagesRepository.save(BlogPages.builder().pageNumber(newPageNumber.toString()).build());
 
-    //         LOGGER.info("Finishing up archiving posts process.");
-    //     }
-
-    // }
-
+        LOGGER.info("Finishing up archiving posts process.");
+    }
 }

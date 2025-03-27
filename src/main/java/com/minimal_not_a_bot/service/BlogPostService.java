@@ -99,7 +99,15 @@ public class BlogPostService {
         }
 
         if (!paragraphImage.isEmpty()) {
-            return buildImageHtmlElement(paragraphImage.attr("src"));
+            if(paragraphImage.size() > 1) {
+                StringBuilder sb = new StringBuilder();
+                for(Element pImg : paragraphImage) {
+                    sb.append(buildImageHtmlElement(pImg.attr("src"), pImg.attr("alt"), pImg.attr("width"), pImg.attr("height")));
+                    sb.append(System.lineSeparator());
+                }
+                return sb.toString();
+            }
+            return buildImageHtmlElement(paragraphImage.attr("src"), paragraphImage.attr("alt"), paragraphImage.attr("width"), paragraphImage.attr("height"));
         }
 
         return cleanText(paragraph.html());
@@ -112,13 +120,13 @@ public class BlogPostService {
                 .replaceAll("\\s+", " ");
     }
 
-    private static String buildImageHtmlElement(String paragraphImageSrcContent) {
-        StringBuilder paragraphImageHTMLElement = new StringBuilder();
-        paragraphImageHTMLElement.append("<img src=\"");
-        paragraphImageHTMLElement.append(paragraphImageSrcContent);
-        paragraphImageHTMLElement.append("\"/>");
+    private static String buildImageHtmlElement(String src, String alt, String width, String height) {
+        if(src.length() > 500) {
+            LOGGER.info("paragraphImageSrcContent is too big, it will need to reprocess");
+            return "";
+        }
 
-        return paragraphImageHTMLElement.toString();
+        return String.format("<img src=\"%s\" alt=\"%s\" width=\"%s\" height=\"%s\"/>", src, alt, width, height);
     }
 
     private static Optional<LocalDateTime> blogPostTheDateFormatter(String theDate) {
