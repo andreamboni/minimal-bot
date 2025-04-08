@@ -212,7 +212,7 @@ public class BlogPostService {
                 List.of("A STORM OF SWORDS", "STORM OF SWORDS", "STORM", "ASOS"),
                 List.of("A FEAST FOR CROWS", "FEAST FOR CROWS", "FEAST", "AFFC"),
                 List.of("A DANCE WITH DRAGONS", "DANCE WITH DRAGONS", "DANCE", "ADWD"),
-                List.of("THE WINDS OF WINTER", "WINDS OF WINTER", "WINDS", "TWOW"),
+                List.of("THE WINDS OF WINTER", "WINDS OF WINTER", "TWOW"),
                 List.of("A DREAM OF SPRING", "DREAM OF SPRING", "DREAM", "ADOS"),
                 List.of("FIRE & BLOOD", "FIRE AND BLOOD", "F&B", "FAB"),
                 List.of("BLOOD & FIRE", "BLOOD AND FIRE", "B&F", "BAF"),
